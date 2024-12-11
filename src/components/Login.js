@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Manage login state
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Manage dropdown visibility
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     // Perform any necessary logout operations (clear cookies, tokens, etc.)
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -47,46 +41,31 @@ const Navbar = () => {
           <Link to="/contact" className="hover:text-yellow-300 transition duration-300">
             Contact Us
           </Link>
-          
-          {/* Login/Sign Up Dropdown */}
-          <div className="relative">
-            <button
-              onClick={toggleDropdown}
-              className="flex items-center space-x-2 hover:text-yellow-300 transition duration-300"
-            >
-              <FaUserCircle className="text-2xl" />
-              <span>{isLoggedIn ? 'Profile' : 'Account'}</span>
-            </button>
 
-            {/* Dropdown Menu */}
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md w-40 py-2 z-10">
-                {!isLoggedIn ? (
-                  <>
-                    <Link
-                      to="/login"
-                      className="block px-4 py-2 text-green-800 hover:bg-green-100"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to="/signup"
-                      className="block px-4 py-2 text-green-800 hover:bg-green-100"
-                    >
-                      Sign Up
-                    </Link>
-                  </>
-                ) : (
-                  <button
-                    onClick={handleLogout}
-                    className="block px-4 py-2 text-green-800 hover:bg-green-100"
-                  >
-                    Logout
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+          {/* Conditionally render Login/Logout and Sign Up */}
+          {!isLoggedIn ? (
+            <>
+              <Link
+                to="/login"
+                className="hover:text-yellow-300 transition duration-300"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="hover:text-yellow-300 transition duration-300"
+              >
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="hover:text-yellow-300 transition duration-300"
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu (Hamburger) */}

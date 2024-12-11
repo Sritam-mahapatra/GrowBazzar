@@ -1,25 +1,24 @@
+// App.js
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import ContactUs from './components/ContactUs';
 import Navbar from './components/Navbar';
-import Slider from './components/Slider';
 import Footer from './components/Footer';
-import ProductShowcase from './components/ProductShowcase'; // If inside the same folder
-import DiscountBanner from './components/DiscountBanner';
+import AboutUs from './components/AboutUs';
 
-
-
-function Home() {
+function App() {
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col justify-between">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <DiscountBanner 
-        discount="20% OFF on all products!" 
-        message="Limited Time Offer!" 
-      />
-      <Slider />
-      <ProductShowcase />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/about" element={<AboutUs/>}/>
+      </Routes>
       <Footer />
     </div>
   );
 }
 
-export default Home;
+export default App;
