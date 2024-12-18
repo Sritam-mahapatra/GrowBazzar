@@ -4,10 +4,12 @@ import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Manage login state
+  const [userType, setUserType] = useState(null); // Track if logged in as buyer/seller
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Manage dropdown visibility
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserType(null);
     // Perform any necessary logout operations (clear cookies, tokens, etc.)
   };
 
@@ -38,9 +40,6 @@ const Navbar = () => {
           <Link to="/about" className="hover:text-yellow-300 transition duration-300">
             About Us
           </Link>
-          <Link to="/for-buyer" className="hover:text-yellow-300 transition duration-300">
-            For Buyers
-          </Link>
           <Link to="/for-seller" className="hover:text-yellow-300 transition duration-300">
             For Sellers
           </Link>
@@ -55,7 +54,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 hover:text-yellow-300 transition duration-300"
             >
               <FaUserCircle className="text-2xl" />
-              <span>{isLoggedIn ? 'Profile' : 'Account'}</span>
+              <span>{isLoggedIn ? (userType === 'seller' ? 'Seller' : 'Buyer') : 'Account'}</span>
             </button>
 
             {/* Dropdown Menu */}
@@ -64,10 +63,16 @@ const Navbar = () => {
                 {!isLoggedIn ? (
                   <>
                     <Link
-                      to="/login"
+                      to="/login-buyer"
                       className="block px-4 py-2 text-green-800 hover:bg-green-100"
                     >
-                      Login
+                      Login as Buyer
+                    </Link>
+                    <Link
+                      to="/login-seller"
+                      className="block px-4 py-2 text-green-800 hover:bg-green-100"
+                    >
+                      Login as Seller
                     </Link>
                     <Link
                       to="/signup"

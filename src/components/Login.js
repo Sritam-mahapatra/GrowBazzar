@@ -1,82 +1,75 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Manage login state
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    // Perform any necessary logout operations (clear cookies, tokens, etc.)
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError('Please fill out all fields.');
+      return;
+    }
+    // Perform login logic here (API calls, authentication, etc.)
+    console.log('Logging in with:', { email, password });
+    setError('');
   };
 
   return (
-    <nav className="bg-white sticky top-0 z-50 shadow-lg">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center p-4">
-        {/* Logo Section */}
-        <div className="text-2xl font-semibold">
-          <Link to="/" className="flex items-center space-x-2">
-            <img
-              src="https://th.bing.com/th/id/R.c83b249c64943e53c12013e7a35da769?rik=xt%2bIZgvKL8%2fKLg&riu=http%3a%2f%2flofrev.net%2fwp-content%2fphotos%2f2014%2f10%2fGreen-logo.jpg&ehk=Q3AidRmxPk5TJDC%2fxeJCTBHjd2pUKm8fnsjvTKEWCjU%3d&risl=&pid=ImgRaw&r=0"
-              alt="Logo"
-              className="w-8 h-8"
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-green-800 mb-6">Login to GrowBazzar</h2>
+        {error && (
+          <div className="mb-4 text-red-500 text-sm text-center">
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-green-200 outline-none"
+              placeholder="Enter your email"
             />
-            <span className="text-green-800">GrowBazzar</span>
-          </Link>
-        </div>
-
-        {/* Navigation Links */}
-        <div className="hidden md:flex space-x-6 text-green-800 font-semibold">
-          <Link to="/" className="hover:text-yellow-300 transition duration-300">
-            Home
-          </Link>
-          <Link to="/about" className="hover:text-yellow-300 transition duration-300">
-            About Us
-          </Link>
-          <Link to="/for-buyer" className="hover:text-yellow-300 transition duration-300">
-            For Buyers
-          </Link>
-          <Link to="/for-seller" className="hover:text-yellow-300 transition duration-300">
-            For Sellers
-          </Link>
-          <Link to="/contact" className="hover:text-yellow-300 transition duration-300">
-            Contact Us
-          </Link>
-
-          {/* Conditionally render Login/Logout and Sign Up */}
-          {!isLoggedIn ? (
-            <>
-              <Link
-                to="/login"
-                className="hover:text-yellow-300 transition duration-300"
-              >
-                Login
-              </Link>
-              <Link
-                to="/signup"
-                className="hover:text-yellow-300 transition duration-300"
-              >
-                Sign Up
-              </Link>
-            </>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="hover:text-yellow-300 transition duration-300"
-            >
-              Logout
-            </button>
-          )}
-        </div>
-
-        {/* Mobile Menu (Hamburger) */}
-        <div className="md:hidden flex items-center space-x-4">
-          <button className="text-white p-2 rounded-full hover:bg-gray-800 focus:outline-none">
-            <i className="fa fa-bars text-xl"></i>
+          </div>
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-green-200 outline-none"
+              placeholder="Enter your password"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-green-800 text-white font-medium py-3 rounded-lg hover:bg-green-900 transition duration-300"
+          >
+            Login
           </button>
+        </form>
+        <div className="mt-6 text-center">
+          <p className="text-gray-700 text-sm">
+            Don't have an account?{' '}
+            <a href="/signup" className="text-green-800 font-medium hover:underline">
+              Sign Up
+            </a>
+          </p>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 
-export default Navbar;
+export default Login;
